@@ -71,37 +71,45 @@ end
 def can_be_found_updated_and_saved
   # Updtate the title "Awesome Flick" to "Even Awesomer Flick", save it, then return it
  movie = Movie.create(title: "Awesome Flick")
- binding.pry
+ movie = Movie.find_by({:title => "Awesome Flick"})
+ 
   movie.update(:title => "Even Awesomer Flick")
   movie.save
+ 
   movie
   
 end
 
 def can_update_using_update_method
   # Update movie title to "Wat, huh?"
-  Movie.create(title: "Wat?")
-  __
-  __
+  movie = Movie.create(title: "Wat?")
+  movie.update(title: "Wat, huh?")
+  movie.save
 end
 
 def can_update_multiple_items_at_once
   # Change title of all movies to "A Movie"
   5.times do |i|
-    Movie.create(title: "Movie_#{i}", release_date: 2000+i)
+   Movie.create(title: "Movie_#{i}", release_date: 2000+i)
   end
-  __
+  5.times do
+    Movie.update(title: "A Movie")
+  end
 end
 
 def can_destroy_a_single_item
-  Movie.create(title: "That One Where the Guy Kicks Another Guy Once")
-  __
-  __
+  movie = Movie.create(title: "That One Where the Guy Kicks Another Guy Once")
+  movie.delete 
+  movie
 end
 
 def can_destroy_all_items_at_once
+  movies = []
   10.times do |i|
-    Movie.create(title: "Movie_#{i}")
+    movies << Movie.create(title: "Movie_#{i}")
+ 
   end
-  __
+    movies.each do |movie|
+      movie.delete
+  end
 end
